@@ -1,0 +1,43 @@
+name: AI Perfume Responder
+
+on:
+  issues:
+    types: [opened]
+  issue_comment:
+    types: [created]
+
+jobs:
+  respond:
+    runs-on: ubuntu-latest
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: pip install requests
+        
+      - name: Get issue/comment details
+        id: details
+        run: |
+          if [ "${{ github.event_name }}" == "issues" ]; then
+            echo "issue_number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
+            echo "comment_body=${{ github.event.issue.body }}" >> $GITHUB_OUTPUT
+          else
+            echo "issue_number=${{ github.event.issue.number }}" >> $GITHUB_OUTPUT
+            echo "comment_body=${{ github.event.comment.body }}" >> $GITHUB_OUTPUT
+          fi
+        
+      - name: Run AI responder
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          ISSUE_NUMBER: ${{ steps.details.outputs.issue_number }}
+          COMMENT_BODY: ${{ steps.details.outputs.comment_body }}
+        run: python .github/scripts/ai_responder.py

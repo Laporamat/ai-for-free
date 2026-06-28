@@ -2,14 +2,30 @@
 
 ยินดีต้อนรับสู่ **AI for Free**! นี่คือ AI แบบ Narrow AI ที่เชี่ยวชาญเรื่องน้ำหอม สามารถเป็นทั้ง Perfumer Designer, ผู้ใช้, และ R&amp;D ให้คุณได้
 
+## 💬 วิธีใช้ AI บน GitHub
+1. สร้าง Issue ใหม่ หรือ แสดงความคิดเห็นใน Issue ที่มีอยู่
+2. ถามคำถามเกี่ยวกับน้ำหอม (ภาษาไทย หรือ อังกฤษก็ได้)
+3. AI จะตอบกลับทันทีผ่าน GitHub Actions!
+
+## ตัวอย่างคำถาม
+- "สวัสดีครับ/ค่ะ"
+- "บอกองค์ประกอบน้ำหอมหน่อย"
+- "มีตระกูลกลิ่นหอมอะไรบ้าง"
+- "ช่วยให้เคล็ดลับออกแบบน้ำหอมหน่อย"
+- "ขอบคุณมากครับ"
+
 ## สถาปัตยกรรมโปรเจกต์
 - **Backend**: Go + Gin Web Framework
 - **Database**: PostgreSQL (Aurora)
 - **Infrastructure**: Terraform (AWS)
+- **GitHub Bot**: GitHub Actions + Python
 
 ## โครงสร้างไดเรกทอรี
 ```
 ai_perfumer/
+├── .github/
+│   ├── workflows/        # GitHub Actions workflow
+│   └── scripts/          # AI responder script
 ├── backend/               # Go backend service
 │   ├── cmd/api/          # Main application entrypoint
 │   ├── internal/
@@ -20,6 +36,7 @@ ai_perfumer/
 ├── migrations/           # SQL database migrations
 ├── terraform/            # Terraform infrastructure config
 ├── app.py                # Original Python CLI
+├── perfume_knowledge.json# AI knowledge base
 └── README.md
 ```
 
@@ -39,9 +56,4 @@ ai_perfumer/
 - ใช้ Terraform เพื่อสร้าง Aurora PostgreSQL และ ECR Repository บน AWS
 - ตั้งค่าตัวแปรใน `variables.tf` แล้วรัน `terraform init && terraform apply`
 
-## ความสามารถเดิม (Python CLI)
-- ให้คำแนะนำเกี่ยวกับกลิ่นหอม
-- อธิบายองค์ประกอบของน้ำหอม
-- ช่วยออกแบบกลิ่นหอมใหม่
-- ตอบคำถามเกี่ยวกับอุตสาหกรรมน้ำหอม
 
